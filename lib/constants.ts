@@ -37,7 +37,7 @@ export const FEATURES: Feature[] = [
   {
     id: 'certified',
     title: 'Certified Installation',
-    description: 'NATE-certified local crews, every single job.',
+    description: 'Certified, background-checked local crews, every job.',
     icon: BadgeCheck,
   },
   {
@@ -78,7 +78,7 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     id: 'standard',
     name: 'Standard Efficiency',
-    seer: '14 SEER2',
+    seer: 'Saves ~15%',
     description: 'Dependable cooling at the lowest upfront cost.',
     price: 3500,
     monthlyPayment: 79,
@@ -94,14 +94,14 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     id: 'high',
     name: 'High-Efficiency Comfort',
-    seer: '18 SEER2',
+    seer: 'Saves ~30%',
     description: 'Balanced energy savings with quiet operation.',
     price: 4800,
     monthlyPayment: 119,
     badge: 'Best Value',
     highlighted: true,
     features: [
-      'Two-stage energy-saving compressor',
+      'Energy-saving two-speed cooling',
       'Whisper-quiet operation',
       'Permits & old-unit removal',
       '10-year parts & labor warranty',
@@ -111,14 +111,14 @@ export const PRICING_TIERS: PricingTier[] = [
   {
     id: 'ultimate',
     name: 'Ultimate Smart System',
-    seer: '22+ SEER2',
+    seer: 'Saves ~45%',
     description: 'Variable-speed comfort with smart-home control.',
     price: 6200,
     monthlyPayment: 159,
     badge: null,
     highlighted: false,
     features: [
-      'Variable-speed inverter compressor',
+      'Ultra-quiet, always-adjusting cooling',
       'Smart thermostat & app control',
       'Permits & old-unit removal',
       '10-year parts & labor warranty',
@@ -230,7 +230,7 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: 'sizing',
     question: 'How do I know I am choosing the right size system for my home?',
     answer:
-      'Our intelligent online configurator uses your square footage and regional climate data to recommend the perfect system size (tonnage). Once you order, a certified local installation supervisor reviews your home details on a quick 10-minute confirmation call to double-verify the system matches your layout before it leaves our warehouse. If an adjustment is needed, we update it free of charge.',
+      'Our easy online configurator uses your square footage and local climate to recommend the right system size for your home. Once you order, a certified local installation supervisor reviews your home details on a quick 10-minute confirmation call to double-verify the system matches your layout before it leaves our warehouse. If an adjustment is needed, we update it free of charge.',
   },
   {
     id: 'pricing',
@@ -283,9 +283,9 @@ export const CONFIG_SYSTEM_TYPES: ConfigSystemType[] = [
   },
   {
     id: 'mini-split',
-    label: 'Mini-Split',
+    label: 'Wall-Mounted',
     base: 2900,
-    description: 'Ductless zones for targeted comfort.',
+    description: 'Wall-mounted units for room-by-room comfort.',
   },
   {
     id: 'hybrid',

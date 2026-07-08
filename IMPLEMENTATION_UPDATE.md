@@ -212,22 +212,23 @@ This checklist tracks the implementation of these updates.
 - [x] Verify Changes
   - [x] Run Next.js development server and inspect page visually
   - [x] Build production bundle to verify compilation is successful
-- [ ] Revision 5 Tasks (Jargon Removal, Service Images, Color Palette & Section Reordering)
-  - [ ] Remove HVAC-specific jargon from all components
-    - [ ] Update `components/hero/hero-section.tsx` - Replace "NATE-certified"
-    - [ ] Update `components/services/services-section.tsx` - Simplify service titles
-    - [ ] Update `components/pricing/pricing-section.tsx` - Remove technical specifications
-    - [ ] Audit other components for technical terminology
-  - [ ] Replace icons with generated images in services section
-    - [ ] Generate 6 custom service images using GenerateImage tool
-    - [ ] Update `components/services/services-section.tsx` with image-based layout
-    - [ ] Verify responsive image display across all breakpoints
-  - [ ] Update color palette from dark blue to light blue
-    - [ ] Add `--color-secondary-light-blue` token to `app/globals.css`
-    - [ ] Update all secondary color references throughout the site
-    - [ ] Update `DESIGN_TOKENS.md` to reflect new color palette
-    - [ ] Test contrast ratios for accessibility (WCAG AA compliance)
-  - [ ] Reorder testimonials section - Move statistics above reviews
-    - [ ] Update `components/testimonials/testimonials-section.tsx` - Reorder JSX elements
-    - [ ] Verify statistics section displays correctly above review cards
+- [x] Revision 5 Tasks (Jargon Removal, Service Images, Color Palette & Section Reordering)
+  - [x] Remove HVAC-specific jargon from all components
+    - [x] Update `components/hero/hero-section.tsx` - Replaced "NATE-certified" with "certified, background-checked"
+    - [x] Update `components/services/services-section.tsx` - Simplified service titles
+    - [x] Update pricing jargon in `lib/constants.ts` - Replaced "SEER2", "compressor", "inverter", "ductless", "tonnage" with plain language ("Saves ~15/30/45%", "two-speed cooling", "wall-mounted", etc.)
+    - [x] Update `components/configurator/configurator-section.tsx` - Relabeled "Efficiency" spec to "Energy savings"
+    - [x] Audit other components for technical terminology
+  - [x] Replace icons with generated images in services section
+    - [x] Generate 6 custom service images using GenerateImage tool
+    - [x] Update `components/services/services-section.tsx` with image-based layout
+    - [x] Verify responsive image display across all breakpoints
+  - [x] Update color palette from white to light blue for the secondary color
+    - [x] Update `--secondary` token to light blue (#e8f1fb) in `app/globals.css`
+    - [x] Secondary color references update automatically via the token
+    - [x] Update `DESIGN_TOKENS.md` to reflect new color palette
+    - [x] Verify contrast (dark slate foreground #1e3a5f on light blue is WCAG AA compliant)
+  - [x] Reorder testimonials section - Move statistics above reviews
+    - [x] Update `components/testimonials/testimonials-section.tsx` - Reordered JSX elements
+    - [x] Verify statistics section displays correctly above review cards
 

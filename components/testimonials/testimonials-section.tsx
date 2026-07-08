@@ -21,12 +21,12 @@ export function TestimonialsSection() {
           </p>
         </Reveal>
 
-        <div className="mt-10">
-          <TestimonialsCarousel testimonials={TESTIMONIALS} />
+        <div className="mt-12 border-b border-white/10 pb-8">
+          <StatsBar />
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-8">
-          <StatsBar />
+        <div className="mt-10">
+          <TestimonialsCarousel testimonials={TESTIMONIALS} />
         </div>
       </div>
     </section>
