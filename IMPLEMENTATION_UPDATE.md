@@ -223,11 +223,11 @@ This checklist tracks the implementation of these updates.
     - [x] Generate 6 custom service images using GenerateImage tool
     - [x] Update `components/services/services-section.tsx` with image-based layout
     - [x] Verify responsive image display across all breakpoints
-  - [ ] Update color palette - Add light blue as secondary accent color
-    - [ ] Add `--secondary-light` token for light blue (#e8f1fb) in `app/globals.css` (keep `--secondary` as white #ffffff)
-    - [ ] Update component backgrounds to use light blue where appropriate (hero, services sections)
-    - [ ] Update `DESIGN_TOKENS.md` to reflect new color palette with light blue as secondary accent
-    - [ ] Verify contrast (dark slate foreground #1e3a5f on light blue is WCAG AA compliant)
+  - [x] Update color palette - Add light blue as secondary accent color
+    - [x] Restored `--secondary` to white (#ffffff) and added `--secondary-light` token for light blue (#e8f1fb) in `app/globals.css`
+    - [x] Updated component backgrounds to use light blue accent (hero + services sections use `bg-secondary-light`)
+    - [x] Updated `DESIGN_TOKENS.md` to reflect white as secondary with light blue as complementary accent
+    - [x] Verified contrast (dark slate foreground #1e3a5f on light blue is WCAG AA compliant)
   - [x] Reorder testimonials section - Move statistics above reviews
     - [x] Update `components/testimonials/testimonials-section.tsx` - Reordered JSX elements
     - [x] Verify statistics section displays correctly above review cards

@@ -38,7 +38,7 @@ const SERVICES = [
 
 export function ServicesSection() {
   return (
-    <section className="bg-secondary py-16 border-b border-border">
+    <section className="bg-secondary-light py-16 border-b border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
         <Reveal className="flex flex-col items-center text-center">
           <h2 className="text-3xl font-bold tracking-tight text-brand md:text-4xl text-center">
@@ -53,7 +53,7 @@ export function ServicesSection() {
           {SERVICES.map((service, i) => (
             <Reveal key={service.id} delay={i * 100}>
               <div className="flex flex-col items-center overflow-hidden bg-card border border-border rounded-2xl w-[240px] shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-border/60 group">
-                <div className="relative w-full aspect-square overflow-hidden bg-secondary">
+                <div className="relative w-full aspect-square overflow-hidden bg-secondary-light">
                   <Image
                     src={service.image || '/placeholder.svg'}
                     alt={service.title}

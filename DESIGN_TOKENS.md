@@ -26,16 +26,17 @@ This document defines all design tokens for the HVAC landing page. These tokens 
   - `--color-primary-light: #2d4a7b`
   - `--color-primary-dark: #0f1e35`
 
-#### Light Blue (Secondary)
-- **Name**: Secondary / Section Background
-- **Usage**: Section backgrounds and subtle surfaces that sit next to white; provides gentle contrast against the crisp white cards
+#### White & Light Blue (Secondary)
+- **Name**: Secondary / Section Backgrounds
+- **Usage**: White remains the main secondary surface (cards, high-contrast elements); light blue is a complementary accent used on select sections (hero, services) to add gentle depth next to white
 - **Values**:
   ```
-  Light Blue (#e8f1fb) - Section backgrounds, subtle contrast next to white
-  Pure White (#ffffff) - Cards and high-contrast surfaces
+  Pure White (#ffffff) - Main secondary surface, cards, high-contrast elements
+  Light Blue (#e8f1fb) - Complementary accent for select section backgrounds
   ```
 - **Hex Codes**:
-  - `--color-secondary: #e8f1fb`
+  - `--color-secondary: #ffffff`
+  - `--color-secondary-light: #e8f1fb`
   - `--color-secondary-foreground: #1e3a5f`
 
 #### Safety Orange (Accent)

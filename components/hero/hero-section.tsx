@@ -16,7 +16,7 @@ export function HeroSection() {
   return (
     <section
       id="systems"
-      className="relative overflow-hidden bg-secondary pt-28 pb-16 sm:pt-32 lg:pb-24"
+      className="relative overflow-hidden bg-secondary-light pt-28 pb-16 sm:pt-32 lg:pb-24"
     >
       {/* Soft background image */}
       <div className="pointer-events-none absolute inset-0 -z-10">
@@ -28,7 +28,7 @@ export function HeroSection() {
           sizes="100vw"
           className="object-cover opacity-[0.06]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-secondary via-secondary/60 to-secondary" />
+        <div className="absolute inset-0 bg-gradient-to-b from-secondary-light via-secondary-light/60 to-secondary-light" />
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
