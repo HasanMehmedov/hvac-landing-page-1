@@ -104,6 +104,67 @@ We will add two new sections to the homepage to boost brand trust and showcase s
 
 ---
 
+## Revision 5 — HVAC Jargon Removal, Service Images, & Color Palette Update
+
+To simplify the landing page and improve user understanding:
+
+### 1. Remove HVAC-Specific Jargon
+Replace technical terms that most users won't understand with simple, accessible language:
+
+**Jargon Terms to Replace**:
+- **NATE-certified** → "Certified technicians" or "Professional technicians"
+- **SEER2** → "Energy-efficient" or "High-efficiency"
+- **Heat Pump** → Keep as-is or replace with "Heating & Cooling Solution"
+- **Ductless** → "Wall-mounted system" or "Zone cooling"
+- **Refrigeration** → "Custom cooling solution" or "Advanced cooling"
+- Any other technical HVAC specifications → Translate to consumer benefits (e.g., "lower energy bills", "better comfort", "quieter operation")
+
+**Files to Update**:
+- `components/services/services-section.tsx` - Service card titles and descriptions
+- `components/hero/hero-section.tsx` - Replace "NATE-certified" with "Certified technicians"
+- `components/pricing/pricing-section.tsx` - Remove/simplify any technical specifications
+- `components/features/brands-banner.tsx` - Keep brand names simple
+- Any other component containing technical HVAC jargon
+
+### 2. Replace Icons with Generated Images in Services Section
+Update `components/services/services-section.tsx` to use generated images instead of SVG icons:
+
+**Approach**:
+- Generate custom images for each service card (e.g., Heat Pump system, Air Conditioning unit, Ductless split system, etc.)
+- Save images to `/public/images/services/`
+- Replace icon-based design with image-based cards
+- Maintain card layout: title, description, and image centered
+- Keep light blue circular backgrounds if desired, or use images directly
+
+**Cards to Update** (6 total):
+1. Heat Pump Installation
+2. Ductless Mini-Split System
+3. Central Air Conditioning
+4. Furnace Installation
+5. Air Quality Solutions
+6. Emergency Repairs
+
+### 3. Update Color Palette - Replace Dark Blue with Light Blue
+Update the secondary color from dark blue to light blue for better visual hierarchy:
+
+**Current Palette**:
+- Primary: Deep Slate Blue (#1e3a5f)
+- Secondary: White (#ffffff)
+- Accent: Safety Orange (#ff6b35)
+
+**Updated Palette**:
+- Primary: Deep Slate Blue (#1e3a5f) - Keep as-is
+- Secondary: Light Blue (#e3f2fd or #d1e7f5) - Replace white background sections
+- Tertiary: White (#ffffff) - For text on light blue
+- Accent: Safety Orange (#ff6b35) - Keep as-is
+
+**Files to Update**:
+- `app/globals.css` - Add `--color-secondary-light-blue` token
+- `DESIGN_TOKENS.md` - Update color system documentation
+- All component backgrounds using secondary color
+
+---
+
 ## Progress Tracking Checklist
 
 This checklist tracks the implementation of these updates.
@@ -133,4 +194,19 @@ This checklist tracks the implementation of these updates.
 - [x] Verify Changes
   - [x] Run Next.js development server and inspect page visually
   - [x] Build production bundle to verify compilation is successful
+- [ ] Revision 5 Tasks (Jargon Removal, Service Images & Color Palette)
+  - [ ] Remove HVAC-specific jargon from all components
+    - [ ] Update `components/hero/hero-section.tsx` - Replace "NATE-certified"
+    - [ ] Update `components/services/services-section.tsx` - Simplify service titles
+    - [ ] Update `components/pricing/pricing-section.tsx` - Remove technical specifications
+    - [ ] Audit other components for technical terminology
+  - [ ] Replace icons with generated images in services section
+    - [ ] Generate 6 custom service images using GenerateImage tool
+    - [ ] Update `components/services/services-section.tsx` with image-based layout
+    - [ ] Verify responsive image display across all breakpoints
+  - [ ] Update color palette from dark blue to light blue
+    - [ ] Add `--color-secondary-light-blue` token to `app/globals.css`
+    - [ ] Update all secondary color references throughout the site
+    - [ ] Update `DESIGN_TOKENS.md` to reflect new color palette
+    - [ ] Test contrast ratios for accessibility (WCAG AA compliance)
 
