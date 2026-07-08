@@ -144,8 +144,8 @@ Update `components/services/services-section.tsx` to use generated images instea
 5. Air Quality Solutions
 6. Emergency Repairs
 
-### 3. Update Color Palette - Replace Dark Blue with Light Blue
-Update the secondary color from dark blue to light blue for better visual hierarchy:
+### 3. Update Color Palette - Add Light Blue as Secondary Color
+Add light blue as a secondary color accent next to white for better visual hierarchy:
 
 **Current Palette**:
 - Primary: Deep Slate Blue (#1e3a5f)
@@ -154,14 +154,14 @@ Update the secondary color from dark blue to light blue for better visual hierar
 
 **Updated Palette**:
 - Primary: Deep Slate Blue (#1e3a5f) - Keep as-is
-- Secondary: Light Blue (#e3f2fd or #d1e7f5) - Replace white background sections
-- Tertiary: White (#ffffff) - For text on light blue
+- Secondary: White (#ffffff) - Keep as main background
+- Secondary Accent: Light Blue (#e8f1fb) - Use as complementary accent next to white
 - Accent: Safety Orange (#ff6b35) - Keep as-is
 
 **Files to Update**:
-- `app/globals.css` - Add `--color-secondary-light-blue` token
+- `app/globals.css` - Add `--secondary-light` token for light blue (#e8f1fb), keep `--secondary` as white
 - `DESIGN_TOKENS.md` - Update color system documentation
-- All component backgrounds using secondary color
+- Component backgrounds - Use light blue for specific sections (hero, services) as accent to white
 
 ### 4. Reorder Testimonials Section - Statistics Above Reviews
 Move the statistics field (containing metrics like "1000+ Happy Customers", "Next Day Service", etc.) to appear above the review cards instead of below them:
@@ -223,11 +223,11 @@ This checklist tracks the implementation of these updates.
     - [x] Generate 6 custom service images using GenerateImage tool
     - [x] Update `components/services/services-section.tsx` with image-based layout
     - [x] Verify responsive image display across all breakpoints
-  - [x] Update color palette from white to light blue for the secondary color
-    - [x] Update `--secondary` token to light blue (#e8f1fb) in `app/globals.css`
-    - [x] Secondary color references update automatically via the token
-    - [x] Update `DESIGN_TOKENS.md` to reflect new color palette
-    - [x] Verify contrast (dark slate foreground #1e3a5f on light blue is WCAG AA compliant)
+  - [ ] Update color palette - Add light blue as secondary accent color
+    - [ ] Add `--secondary-light` token for light blue (#e8f1fb) in `app/globals.css` (keep `--secondary` as white #ffffff)
+    - [ ] Update component backgrounds to use light blue where appropriate (hero, services sections)
+    - [ ] Update `DESIGN_TOKENS.md` to reflect new color palette with light blue as secondary accent
+    - [ ] Verify contrast (dark slate foreground #1e3a5f on light blue is WCAG AA compliant)
   - [x] Reorder testimonials section - Move statistics above reviews
     - [x] Update `components/testimonials/testimonials-section.tsx` - Reordered JSX elements
     - [x] Verify statistics section displays correctly above review cards
