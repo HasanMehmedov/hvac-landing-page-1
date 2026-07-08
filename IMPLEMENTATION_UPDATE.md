@@ -163,6 +163,24 @@ Update the secondary color from dark blue to light blue for better visual hierar
 - `DESIGN_TOKENS.md` - Update color system documentation
 - All component backgrounds using secondary color
 
+### 4. Reorder Testimonials Section - Statistics Above Reviews
+Move the statistics field (containing metrics like "1000+ Happy Customers", "Next Day Service", etc.) to appear above the review cards instead of below them:
+
+**Current Layout**:
+- Section Title
+- Section Subtitle
+- Review Cards (testimonials)
+- Statistics Field (metrics)
+
+**Updated Layout**:
+- Section Title
+- Section Subtitle
+- Statistics Field (metrics) ← **Moved up**
+- Review Cards (testimonials)
+
+**Files to Update**:
+- `components/testimonials/testimonials-section.tsx` - Reorder the component elements in the JSX to place statistics above the review cards
+
 ---
 
 ## Progress Tracking Checklist
@@ -194,7 +212,7 @@ This checklist tracks the implementation of these updates.
 - [x] Verify Changes
   - [x] Run Next.js development server and inspect page visually
   - [x] Build production bundle to verify compilation is successful
-- [ ] Revision 5 Tasks (Jargon Removal, Service Images & Color Palette)
+- [ ] Revision 5 Tasks (Jargon Removal, Service Images, Color Palette & Section Reordering)
   - [ ] Remove HVAC-specific jargon from all components
     - [ ] Update `components/hero/hero-section.tsx` - Replace "NATE-certified"
     - [ ] Update `components/services/services-section.tsx` - Simplify service titles
@@ -209,4 +227,7 @@ This checklist tracks the implementation of these updates.
     - [ ] Update all secondary color references throughout the site
     - [ ] Update `DESIGN_TOKENS.md` to reflect new color palette
     - [ ] Test contrast ratios for accessibility (WCAG AA compliance)
+  - [ ] Reorder testimonials section - Move statistics above reviews
+    - [ ] Update `components/testimonials/testimonials-section.tsx` - Reorder JSX elements
+    - [ ] Verify statistics section displays correctly above review cards
 
