@@ -156,7 +156,7 @@ export function ConfiguratorSection() {
                 />
                 <Spec
                   icon={<Zap className="size-5" />}
-                  label="Efficiency"
+                  label="Energy savings"
                   value={result.tier.seer}
                 />
               </div>

@@ -104,6 +104,85 @@ We will add two new sections to the homepage to boost brand trust and showcase s
 
 ---
 
+## Revision 5 — HVAC Jargon Removal, Service Images, & Color Palette Update
+
+To simplify the landing page and improve user understanding:
+
+### 1. Remove HVAC-Specific Jargon
+Replace technical terms that most users won't understand with simple, accessible language:
+
+**Jargon Terms to Replace**:
+- **NATE-certified** → "Certified technicians" or "Professional technicians"
+- **SEER2** → "Energy-efficient" or "High-efficiency"
+- **Heat Pump** → Keep as-is or replace with "Heating & Cooling Solution"
+- **Ductless** → "Wall-mounted system" or "Zone cooling"
+- **Refrigeration** → "Custom cooling solution" or "Advanced cooling"
+- Any other technical HVAC specifications → Translate to consumer benefits (e.g., "lower energy bills", "better comfort", "quieter operation")
+
+**Files to Update**:
+- `components/services/services-section.tsx` - Service card titles and descriptions
+- `components/hero/hero-section.tsx` - Replace "NATE-certified" with "Certified technicians"
+- `components/pricing/pricing-section.tsx` - Remove/simplify any technical specifications
+- `components/features/brands-banner.tsx` - Keep brand names simple
+- Any other component containing technical HVAC jargon
+
+### 2. Replace Icons with Generated Images in Services Section
+Update `components/services/services-section.tsx` to use generated images instead of SVG icons:
+
+**Approach**:
+- Generate custom images for each service card (e.g., Heat Pump system, Air Conditioning unit, Ductless split system, etc.)
+- Save images to `/public/images/services/`
+- Replace icon-based design with image-based cards
+- Maintain card layout: title, description, and image centered
+- Keep light blue circular backgrounds if desired, or use images directly
+
+**Cards to Update** (6 total):
+1. Heat Pump Installation
+2. Ductless Mini-Split System
+3. Central Air Conditioning
+4. Furnace Installation
+5. Air Quality Solutions
+6. Emergency Repairs
+
+### 3. Update Color Palette - Add Light Blue as Secondary Color
+Add light blue as a secondary color accent next to white for better visual hierarchy:
+
+**Current Palette**:
+- Primary: Deep Slate Blue (#1e3a5f)
+- Secondary: White (#ffffff)
+- Accent: Safety Orange (#ff6b35)
+
+**Updated Palette**:
+- Primary: Deep Slate Blue (#1e3a5f) - Keep as-is
+- Secondary: White (#ffffff) - Keep as main background
+- Secondary Accent: Light Blue (#e8f1fb) - Use as complementary accent next to white
+- Accent: Safety Orange (#ff6b35) - Keep as-is
+
+**Files to Update**:
+- `app/globals.css` - Add `--secondary-light` token for light blue (#e8f1fb), keep `--secondary` as white
+- `DESIGN_TOKENS.md` - Update color system documentation
+- Component backgrounds - Use light blue for specific sections (hero, services) as accent to white
+
+### 4. Reorder Testimonials Section - Statistics Above Reviews
+Move the statistics field (containing metrics like "1000+ Happy Customers", "Next Day Service", etc.) to appear above the review cards instead of below them:
+
+**Current Layout**:
+- Section Title
+- Section Subtitle
+- Review Cards (testimonials)
+- Statistics Field (metrics)
+
+**Updated Layout**:
+- Section Title
+- Section Subtitle
+- Statistics Field (metrics) ← **Moved up**
+- Review Cards (testimonials)
+
+**Files to Update**:
+- `components/testimonials/testimonials-section.tsx` - Reorder the component elements in the JSX to place statistics above the review cards
+
+---
+
 ## Progress Tracking Checklist
 
 This checklist tracks the implementation of these updates.
@@ -133,4 +212,23 @@ This checklist tracks the implementation of these updates.
 - [x] Verify Changes
   - [x] Run Next.js development server and inspect page visually
   - [x] Build production bundle to verify compilation is successful
+- [x] Revision 5 Tasks (Jargon Removal, Service Images, Color Palette & Section Reordering)
+  - [x] Remove HVAC-specific jargon from all components
+    - [x] Update `components/hero/hero-section.tsx` - Replaced "NATE-certified" with "certified, background-checked"
+    - [x] Update `components/services/services-section.tsx` - Simplified service titles
+    - [x] Update pricing jargon in `lib/constants.ts` - Replaced "SEER2", "compressor", "inverter", "ductless", "tonnage" with plain language ("Saves ~15/30/45%", "two-speed cooling", "wall-mounted", etc.)
+    - [x] Update `components/configurator/configurator-section.tsx` - Relabeled "Efficiency" spec to "Energy savings"
+    - [x] Audit other components for technical terminology
+  - [x] Replace icons with generated images in services section
+    - [x] Generate 6 custom service images using GenerateImage tool
+    - [x] Update `components/services/services-section.tsx` with image-based layout
+    - [x] Verify responsive image display across all breakpoints
+  - [x] Update color palette - Add light blue as secondary accent color
+    - [x] Restored `--secondary` to white (#ffffff) and added `--secondary-light` token for light blue (#e8f1fb) in `app/globals.css`
+    - [x] Updated component backgrounds to use light blue accent (hero + services sections use `bg-secondary-light`)
+    - [x] Updated `DESIGN_TOKENS.md` to reflect white as secondary with light blue as complementary accent
+    - [x] Verified contrast (dark slate foreground #1e3a5f on light blue is WCAG AA compliant)
+  - [x] Reorder testimonials section - Move statistics above reviews
+    - [x] Update `components/testimonials/testimonials-section.tsx` - Reordered JSX elements
+    - [x] Verify statistics section displays correctly above review cards
 
