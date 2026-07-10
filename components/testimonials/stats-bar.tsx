@@ -9,10 +9,10 @@ export function StatsBar() {
       {STATS.map((stat, i) => (
         <Reveal key={stat.id} delay={i * 100}>
           <div className="flex items-baseline justify-center gap-2 text-center sm:flex-col sm:items-center sm:gap-1">
-            <p className="text-xl font-bold tracking-tight text-orange">
+            <p className="text-xl font-bold tracking-tight text-orange-light">
               {stat.value}
             </p>
-            <p className="text-xs leading-relaxed text-muted-foreground">
+            <p className="text-xs leading-relaxed text-brand-foreground/60">
               {stat.label}
             </p>
           </div>
