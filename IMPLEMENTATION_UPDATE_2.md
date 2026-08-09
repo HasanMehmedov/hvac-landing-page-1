@@ -855,6 +855,17 @@ Card width: 25% of container
 - **Impact:** Users cannot navigate back to the pricing section after visiting another page if they need to revisit it.
 - **Status:** ✅ COMPLETED — Root cause was the plain `<Link href="/#pricing">`: once the URL hash was already `#pricing`, Next.js did not re-trigger a scroll on repeat clicks. Fixed with an `onClick` handler that calls `scrollToId('pricing')` directly when already on the home page (so repeat clicks always re-scroll), and falls back to `router.push('/#pricing')` from other pages. Verified in-browser: repeat clicks consistently scroll to the pricing section.
 
+### Mobile Horizontal Overflow: Home Page Slides Right Revealing Blank Space
+- **Location:** Home page (`/`), visible on mobile widths (reproduced at 300px and 375px).
+- **Issue Description:** On mobile the page was wider than the viewport and could be scrolled/dragged horizontally, revealing an empty white strip to the right of the content. Measured document width was ~1464px against a 300px viewport.
+- **Root Cause:** Two distinct sources of horizontal layout-overflow that both propagated to the document (page) scroll box:
+  1. **Testimonials carousel** (`components/testimonials/testimonials-carousel.tsx`) — the inner horizontal scroller (`overflow-x-auto`, ~1487px of cards) visually clipped its cards, but its *scrollable overflow* propagated up through its `overflow: visible` ancestors and made the whole document horizontally scrollable. This accounted for the bulk of the overflow (~1464px).
+  2. **`Reveal` scroll animation** (`components/reveal.tsx`) — sections using `direction="left"`/`"right"` (e.g. the configurator) sit at a `translate-x-6` / `-translate-x-6` offset while off-screen and not yet revealed. Below-the-fold horizontal reveals near the right edge pushed a few extra pixels past the viewport until scrolled into view (residual ~8px).
+- **Fix:**
+  - Added `overflow-x-clip` to the carousel region wrapper (`.relative` in `testimonials-carousel.tsx`) to contain the nested scroller's propagated overflow locally. The inner carousel still scrolls/swipes and the arrow + dot controls still work (nested scroll container is unaffected by an ancestor clip).
+  - Added `overflow-x-clip` to the root layout wrapper (`#top` in `app/layout.tsx`) as a site-wide safety net so any horizontally-translating `Reveal` (or future element) can never create page-level horizontal scroll. `overflow-x-clip` was chosen over `overflow-x-hidden` because it clips without creating a scroll container; verified there are no `position: sticky` elements and the navbar is not sticky, so clipping is side-effect free.
+- **Status:** ✅ COMPLETED — Verified in-browser that `document.documentElement.scrollWidth === window.innerWidth` at 300px, 375px, 768px, and 1440px, including after scrolling to the bottom past all reveal animations. Confirmed on `/`, `/reviews`, and `/about`, and confirmed the testimonials carousel still scrolls horizontally via swipe and the next/prev controls.
+
 ---
 
 ## Implementation Order

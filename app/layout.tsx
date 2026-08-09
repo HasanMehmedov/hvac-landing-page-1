@@ -92,7 +92,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} bg-background`}>
       <body className="font-sans antialiased">
-        <div id="top" className="flex min-h-screen flex-col">
+        <div id="top" className="flex min-h-screen flex-col overflow-x-clip">
           <Navbar />
           {children}
           <Footer />
