@@ -868,6 +868,40 @@ Card width: 25% of container
 
 ---
 
+### New `/services` Listing Page + Homepage "Our HVAC Service" Preview
+- **Goal:** Add a dedicated `/services` page that lists all 8 services, and trim the homepage "Our HVAC Service" section to a 3-card preview that links out to the full page (mirroring the existing "See all reviews" pattern under the testimonials section).
+- **Scope guardrail:** Do NOT change the individual `/services/[slug]` detail pages or the `Service` data model in `lib/services.ts`. Only the homepage summary section, the new listing page, and nav/footer links change.
+
+- **Step 1 — Extract a reusable `ServiceCard`.**
+  - The card is currently defined inline (and not exported) inside `components/services/services-section.tsx`. To render identical cards on both the homepage and the new page without duplicating markup, move it into its own file `components/services/service-card.tsx` and export it (`export function ServiceCard({ service }: { service: Service })`).
+  - Keep the markup byte-for-byte identical: image with icon badge, title, `text-left` description, and the "Learn More" link routing to `/services/${service.id}` (routing unchanged).
+  - Update `services-section.tsx` to import `ServiceCard` from the new file instead of defining it locally.
+
+- **Step 2 — New `app/services/page.tsx` (server component).**
+  - Add `export const metadata` (title/description) consistent with the `/reviews` page pattern.
+  - Structure mirrors `app/reviews/page.tsx`: `<main className="flex-1 pt-16">` (the `pt-16` clears the fixed navbar), a header `<section>` reusing the "Our HVAC Service" title + "Choose best technicians and latest HVAC technology" subheading (promote the `h2` to an `h1` for the standalone page), then a grid `<section>`.
+  - Grid: `grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4` mapping over all 8 `SERVICES` — matching the homepage grid exactly (1 col mobile / 2 tablet / 4 desktop). Wrap each card in `Reveal` with the same staggered `delay={(i % 4) * 80}` used on the homepage.
+  - Reuse `ServiceCard` from Step 1 so cards are visually identical.
+
+- **Step 3 — Trim the homepage `ServicesSection` to a 3-card preview.**
+  - Render only the first 3 services (Air Conditioning, Heating Systems, Heat Pumps — already the first 3 entries in `SERVICES`) via `SERVICES.slice(0, 3)`.
+  - Grid becomes `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3` so 3 cards fill the row evenly on desktop (card design and `Reveal` behavior otherwise unchanged).
+  - Below the grid, add a centered "See all services" link that is a structural copy of the testimonials "See all reviews" link: `mt-8 flex justify-center` wrapper containing a `Link href="/services"` with classes `inline-flex items-center gap-1.5 text-sm font-semibold text-orange underline-offset-4 transition-colors hover:text-orange-dark hover:underline` and a trailing `<ArrowRight className="size-4" aria-hidden="true" />`.
+
+- **Step 4 — Navigation & footer links.**
+  - Navbar: add `{ label: 'Services', href: '/services' }` to `NAV_ITEMS` in `components/layout/navbar.tsx` (renders automatically in both the desktop nav and the mobile menu, so it's reachable on the primary mobile surface). Place it before "About".
+  - Footer: repoint the `Systems` column in `FOOTER_LINKS` (`lib/constants.ts`) so its links resolve to real destinations. Point the column items at `/services` (the individual slugs — `/services/heat-pumps`, `/services/ductless-mini-splits` — where a clean match exists), replacing the current dead `#systems` anchors.
+
+- **Mobile-first checks (primary surface, 300–375px):**
+  - Homepage preview: 3 cards stack to a single column; "See all services" link is centered and tappable.
+  - `/services` page: header text wraps cleanly under the fixed navbar (`pt-16`), all 8 cards stack in one column, no horizontal overflow (`scrollWidth === innerWidth`).
+  - Navbar: "Services" appears in the hamburger menu and routes to `/services`.
+
+- **Verification:** In-browser at 300px, 768px, and 1440px — confirm the homepage shows exactly 3 cards + working "See all services" link, `/services` shows all 8 in the correct responsive column counts, every "Learn More" and the new nav/footer links route correctly, and no route regresses the horizontal-overflow fix.
+- **Status:** ⏳ PLANNED — awaiting implementation.
+
+---
+
 ## Implementation Order
 
 1. **Audit and fix responsive design** - Test all sections at mobile/tablet/desktop breakpoints; add hamburger menu, stack layouts, fix overflow/scrolling issues across entire site
