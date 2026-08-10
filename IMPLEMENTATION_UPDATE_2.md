@@ -898,7 +898,7 @@ Card width: 25% of container
   - Navbar: "Services" appears in the hamburger menu and routes to `/services`.
 
 - **Verification:** In-browser at 300px, 768px, and 1440px — confirm the homepage shows exactly 3 cards + working "See all services" link, `/services` shows all 8 in the correct responsive column counts, every "Learn More" and the new nav/footer links route correctly, and no route regresses the horizontal-overflow fix.
-- **Status:** ⏳ PLANNED — awaiting implementation.
+- **Status:** ✅ COMPLETED — Extracted `ServiceCard` into `components/services/service-card.tsx` (imported by both surfaces), added `app/services/page.tsx` listing all 8 services in the 1/2/4-column grid, trimmed the homepage `ServicesSection` to the first 3 services (now a 1/2/3 grid) with a centered "See all services" link mirroring the "See all reviews" pattern, added the `Services` nav item before `About`, and repointed the footer `Systems` column to real service routes. Verified in-browser: homepage shows exactly 3 cards + working link, `/services` shows all 8, footer links resolve, and no horizontal overflow at 375px.
 
 ---
 
