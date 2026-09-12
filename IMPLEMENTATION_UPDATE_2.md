@@ -902,19 +902,31 @@ Card width: 25% of container
 
 ---
 
-## Implementation Order
+## Canonical Implementation Plan
 
-1. **Audit and fix responsive design** - Test all sections at mobile/tablet/desktop breakpoints; add hamburger menu, stack layouts, fix overflow/scrolling issues across entire site
-2. **Audit and fix text alignment** - Replace justified text with left-aligned (body) and center-aligned (headings) across all sections
-3. **Simplify navigation bar** - Remove five anchor-link items, keep logo and CTA button, add "About" link
-4. **Create /reviews page** - Build customer reviews page with header stats, full review grid, pagination/load-more, and CTA
-5. **Create /about page** - Build company information page with all 6 sections (hero, mission, stats, brands, certifications, CTA)
-6. **Update footer links** - Change "Reviews" link to point to `/reviews` page (remove anchor link)
-7. Create `/app/services/[slug]/page.tsx` and layout
-8. Update `ServiceCard` component to include "Learn More" button
-9. Update `ServicesSection` component to use grid instead of marquee
-10. Remove marquee wrapper and duplicated array logic
-11. Verify all routing works
-12. Run final responsive testing on all new pages and updated sections
-13. Run build to confirm static generation
+This is the active plan for future work. Earlier detailed checklists are historical notes only and should not be treated as open tasks.
+
+### Completed foundations
+- Responsive layout audit across the homepage, `/about`, `/reviews`, `/services`, and `/services/[slug]` routes.
+- Mobile navigation with Services, About, Reviews, and Shop Systems actions.
+- Text-alignment audit: body copy is left-aligned and centered section headings remain centered.
+- `/about` and `/reviews` pages, including responsive layouts and page metadata.
+- Static service detail routes with Learn More links.
+- Homepage service preview limited to three cards with a See all services link.
+- Dedicated `/services` page listing all eight services.
+- Footer service and review links updated to real routes.
+- Mobile horizontal overflow fix, verified across the primary mobile viewport and larger breakpoints.
+- Shop Systems repeat-navigation behavior fixed.
+
+### Open work
+- No implementation tasks are currently open in this document.
+- If new work is added, record it as a focused section below with: goal, affected files/routes, acceptance criteria, verification evidence, and status.
+- Keep this canonical plan synchronized with the actual implementation; do not re-add superseded requirements such as an eight-card homepage grid, marquee services, anchor-only navigation, or a navigation layout containing only the logo and CTA.
+
+### Verification standard for future changes
+- Test the primary mobile viewport at 300px wide first, then 375px, 768px, and 1440px.
+- Confirm `document.documentElement.scrollWidth === window.innerWidth` on every affected route.
+- Exercise the primary interaction path for every changed link, button, menu, carousel, or form.
+- Run the project build when a change affects routing, metadata, static generation, or shared components.
+
 
