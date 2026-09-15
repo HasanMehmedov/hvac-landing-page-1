@@ -58,7 +58,7 @@ export function TestimonialsCarousel({
 
   return (
     <div
-      className="relative"
+      className="relative overflow-x-clip"
       role="region"
       aria-roledescription="carousel"
       aria-label="Customer reviews"

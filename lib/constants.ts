@@ -323,10 +323,10 @@ export function recommendTier(
 
 export const FOOTER_LINKS = {
   Systems: [
-    { label: 'Central Air', href: '#systems' },
-    { label: 'Heat Pumps', href: '#systems' },
-    { label: 'Mini-Splits', href: '#systems' },
-    { label: 'Smart Thermostats', href: '#systems' },
+    { label: 'Air Conditioning', href: '/services/air-conditioning' },
+    { label: 'Heat Pumps', href: '/services/heat-pumps' },
+    { label: 'Mini-Splits', href: '/services/ductless-mini-splits' },
+    { label: 'All Services', href: '/services' },
   ],
   Company: [
     { label: 'How It Works', href: '#configurator' },

@@ -11,6 +11,7 @@ import { scrollToId } from '@/lib/format'
 import { BRAND } from '@/lib/constants'
 
 const NAV_ITEMS = [
+  { label: 'Services', href: '/services' },
   { label: 'About', href: '/about' },
   { label: 'Reviews', href: '/reviews' },
 ]

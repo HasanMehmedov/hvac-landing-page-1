@@ -1,46 +1,14 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
-import { SERVICES, type Service } from '@/lib/services'
-
-function ServiceCard({ service }: { service: Service }) {
-  const Icon = service.icon
-  return (
-    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-      <div className="relative h-44 w-full">
-        <Image
-          src={service.image || '/placeholder.svg'}
-          alt={`${service.title} service`}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover"
-        />
-        <span className="absolute -bottom-6 left-5 flex size-14 items-center justify-center rounded-full bg-card text-brand shadow-md ring-1 ring-border">
-          <Icon className="size-6" aria-hidden="true" />
-        </span>
-      </div>
-      <div className="flex flex-1 flex-col px-5 pb-6 pt-9">
-        <h3 className="text-lg font-bold text-brand">{service.title}</h3>
-        <p className="mt-2 flex-1 text-left text-sm leading-relaxed text-muted-foreground text-pretty">
-          {service.description}
-        </p>
-        <Link
-          href={`/services/${service.id}`}
-          className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-orange transition-colors hover:text-orange-dark"
-        >
-          Learn More
-          <ArrowRight className="size-4" aria-hidden="true" />
-          <span className="sr-only"> about {service.title}</span>
-        </Link>
-      </div>
-    </article>
-  )
-}
+import { ServiceCard } from '@/components/services/service-card'
+import { SERVICES } from '@/lib/services'
 
 export function ServicesSection() {
+  const previewServices = SERVICES.slice(0, 3)
+
   return (
     <section
       id="services"
@@ -56,12 +24,22 @@ export function ServicesSection() {
           </p>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((service, i) => (
-            <Reveal key={service.id} delay={(i % 4) * 80} className="h-full">
+        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {previewServices.map((service, i) => (
+            <Reveal key={service.id} delay={(i % 3) * 80} className="h-full">
               <ServiceCard service={service} />
             </Reveal>
           ))}
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-orange underline-offset-4 transition-colors hover:text-orange-dark hover:underline"
+          >
+            See all services
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </section>

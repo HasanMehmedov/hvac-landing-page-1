@@ -855,21 +855,78 @@ Card width: 25% of container
 - **Impact:** Users cannot navigate back to the pricing section after visiting another page if they need to revisit it.
 - **Status:** ✅ COMPLETED — Root cause was the plain `<Link href="/#pricing">`: once the URL hash was already `#pricing`, Next.js did not re-trigger a scroll on repeat clicks. Fixed with an `onClick` handler that calls `scrollToId('pricing')` directly when already on the home page (so repeat clicks always re-scroll), and falls back to `router.push('/#pricing')` from other pages. Verified in-browser: repeat clicks consistently scroll to the pricing section.
 
+### Mobile Horizontal Overflow: Home Page Slides Right Revealing Blank Space
+- **Location:** Home page (`/`), visible on mobile widths (reproduced at 300px and 375px).
+- **Issue Description:** On mobile the page was wider than the viewport and could be scrolled/dragged horizontally, revealing an empty white strip to the right of the content. Measured document width was ~1464px against a 300px viewport.
+- **Root Cause:** Two distinct sources of horizontal layout-overflow that both propagated to the document (page) scroll box:
+  1. **Testimonials carousel** (`components/testimonials/testimonials-carousel.tsx`) — the inner horizontal scroller (`overflow-x-auto`, ~1487px of cards) visually clipped its cards, but its *scrollable overflow* propagated up through its `overflow: visible` ancestors and made the whole document horizontally scrollable. This accounted for the bulk of the overflow (~1464px).
+  2. **`Reveal` scroll animation** (`components/reveal.tsx`) — sections using `direction="left"`/`"right"` (e.g. the configurator) sit at a `translate-x-6` / `-translate-x-6` offset while off-screen and not yet revealed. Below-the-fold horizontal reveals near the right edge pushed a few extra pixels past the viewport until scrolled into view (residual ~8px).
+- **Fix:**
+  - Added `overflow-x-clip` to the carousel region wrapper (`.relative` in `testimonials-carousel.tsx`) to contain the nested scroller's propagated overflow locally. The inner carousel still scrolls/swipes and the arrow + dot controls still work (nested scroll container is unaffected by an ancestor clip).
+  - Added `overflow-x-clip` to the root layout wrapper (`#top` in `app/layout.tsx`) as a site-wide safety net so any horizontally-translating `Reveal` (or future element) can never create page-level horizontal scroll. `overflow-x-clip` was chosen over `overflow-x-hidden` because it clips without creating a scroll container; verified there are no `position: sticky` elements and the navbar is not sticky, so clipping is side-effect free.
+- **Status:** ✅ COMPLETED — Verified in-browser that `document.documentElement.scrollWidth === window.innerWidth` at 300px, 375px, 768px, and 1440px, including after scrolling to the bottom past all reveal animations. Confirmed on `/`, `/reviews`, and `/about`, and confirmed the testimonials carousel still scrolls horizontally via swipe and the next/prev controls.
+
 ---
 
-## Implementation Order
+### New `/services` Listing Page + Homepage "Our HVAC Service" Preview
+- **Goal:** Add a dedicated `/services` page that lists all 8 services, and trim the homepage "Our HVAC Service" section to a 3-card preview that links out to the full page (mirroring the existing "See all reviews" pattern under the testimonials section).
+- **Scope guardrail:** Do NOT change the individual `/services/[slug]` detail pages or the `Service` data model in `lib/services.ts`. Only the homepage summary section, the new listing page, and nav/footer links change.
 
-1. **Audit and fix responsive design** - Test all sections at mobile/tablet/desktop breakpoints; add hamburger menu, stack layouts, fix overflow/scrolling issues across entire site
-2. **Audit and fix text alignment** - Replace justified text with left-aligned (body) and center-aligned (headings) across all sections
-3. **Simplify navigation bar** - Remove five anchor-link items, keep logo and CTA button, add "About" link
-4. **Create /reviews page** - Build customer reviews page with header stats, full review grid, pagination/load-more, and CTA
-5. **Create /about page** - Build company information page with all 6 sections (hero, mission, stats, brands, certifications, CTA)
-6. **Update footer links** - Change "Reviews" link to point to `/reviews` page (remove anchor link)
-7. Create `/app/services/[slug]/page.tsx` and layout
-8. Update `ServiceCard` component to include "Learn More" button
-9. Update `ServicesSection` component to use grid instead of marquee
-10. Remove marquee wrapper and duplicated array logic
-11. Verify all routing works
-12. Run final responsive testing on all new pages and updated sections
-13. Run build to confirm static generation
+- **Step 1 — Extract a reusable `ServiceCard`.**
+  - The card is currently defined inline (and not exported) inside `components/services/services-section.tsx`. To render identical cards on both the homepage and the new page without duplicating markup, move it into its own file `components/services/service-card.tsx` and export it (`export function ServiceCard({ service }: { service: Service })`).
+  - Keep the markup byte-for-byte identical: image with icon badge, title, `text-left` description, and the "Learn More" link routing to `/services/${service.id}` (routing unchanged).
+  - Update `services-section.tsx` to import `ServiceCard` from the new file instead of defining it locally.
+
+- **Step 2 — New `app/services/page.tsx` (server component).**
+  - Add `export const metadata` (title/description) consistent with the `/reviews` page pattern.
+  - Structure mirrors `app/reviews/page.tsx`: `<main className="flex-1 pt-16">` (the `pt-16` clears the fixed navbar), a header `<section>` reusing the "Our HVAC Service" title + "Choose best technicians and latest HVAC technology" subheading (promote the `h2` to an `h1` for the standalone page), then a grid `<section>`.
+  - Grid: `grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4` mapping over all 8 `SERVICES` — matching the homepage grid exactly (1 col mobile / 2 tablet / 4 desktop). Wrap each card in `Reveal` with the same staggered `delay={(i % 4) * 80}` used on the homepage.
+  - Reuse `ServiceCard` from Step 1 so cards are visually identical.
+
+- **Step 3 — Trim the homepage `ServicesSection` to a 3-card preview.**
+  - Render only the first 3 services (Air Conditioning, Heating Systems, Heat Pumps — already the first 3 entries in `SERVICES`) via `SERVICES.slice(0, 3)`.
+  - Grid becomes `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3` so 3 cards fill the row evenly on desktop (card design and `Reveal` behavior otherwise unchanged).
+  - Below the grid, add a centered "See all services" link that is a structural copy of the testimonials "See all reviews" link: `mt-8 flex justify-center` wrapper containing a `Link href="/services"` with classes `inline-flex items-center gap-1.5 text-sm font-semibold text-orange underline-offset-4 transition-colors hover:text-orange-dark hover:underline` and a trailing `<ArrowRight className="size-4" aria-hidden="true" />`.
+
+- **Step 4 — Navigation & footer links.**
+  - Navbar: add `{ label: 'Services', href: '/services' }` to `NAV_ITEMS` in `components/layout/navbar.tsx` (renders automatically in both the desktop nav and the mobile menu, so it's reachable on the primary mobile surface). Place it before "About".
+  - Footer: repoint the `Systems` column in `FOOTER_LINKS` (`lib/constants.ts`) so its links resolve to real destinations. Point the column items at `/services` (the individual slugs — `/services/heat-pumps`, `/services/ductless-mini-splits` — where a clean match exists), replacing the current dead `#systems` anchors.
+
+- **Mobile-first checks (primary surface, 300–375px):**
+  - Homepage preview: 3 cards stack to a single column; "See all services" link is centered and tappable.
+  - `/services` page: header text wraps cleanly under the fixed navbar (`pt-16`), all 8 cards stack in one column, no horizontal overflow (`scrollWidth === innerWidth`).
+  - Navbar: "Services" appears in the hamburger menu and routes to `/services`.
+
+- **Verification:** In-browser at 300px, 768px, and 1440px — confirm the homepage shows exactly 3 cards + working "See all services" link, `/services` shows all 8 in the correct responsive column counts, every "Learn More" and the new nav/footer links route correctly, and no route regresses the horizontal-overflow fix.
+- **Status:** ✅ COMPLETED — Extracted `ServiceCard` into `components/services/service-card.tsx` (imported by both surfaces), added `app/services/page.tsx` listing all 8 services in the 1/2/4-column grid, trimmed the homepage `ServicesSection` to the first 3 services (now a 1/2/3 grid) with a centered "See all services" link mirroring the "See all reviews" pattern, added the `Services` nav item before `About`, and repointed the footer `Systems` column to real service routes. Verified in-browser: homepage shows exactly 3 cards + working link, `/services` shows all 8, footer links resolve, and no horizontal overflow at 375px.
+
+---
+
+## Canonical Implementation Plan
+
+This is the active plan for future work. Earlier detailed checklists are historical notes only and should not be treated as open tasks.
+
+### Completed foundations
+- Responsive layout audit across the homepage, `/about`, `/reviews`, `/services`, and `/services/[slug]` routes.
+- Mobile navigation with Services, About, Reviews, and Shop Systems actions.
+- Text-alignment audit: body copy is left-aligned and centered section headings remain centered.
+- `/about` and `/reviews` pages, including responsive layouts and page metadata.
+- Static service detail routes with Learn More links.
+- Homepage service preview limited to three cards with a See all services link.
+- Dedicated `/services` page listing all eight services.
+- Footer service and review links updated to real routes.
+- Mobile horizontal overflow fix, verified across the primary mobile viewport and larger breakpoints.
+- Shop Systems repeat-navigation behavior fixed.
+
+### Open work
+- No implementation tasks are currently open in this document.
+- If new work is added, record it as a focused section below with: goal, affected files/routes, acceptance criteria, verification evidence, and status.
+- Keep this canonical plan synchronized with the actual implementation; do not re-add superseded requirements such as an eight-card homepage grid, marquee services, anchor-only navigation, or a navigation layout containing only the logo and CTA.
+
+### Verification standard for future changes
+- Test the primary mobile viewport at 300px wide first, then 375px, 768px, and 1440px.
+- Confirm `document.documentElement.scrollWidth === window.innerWidth` on every affected route.
+- Exercise the primary interaction path for every changed link, button, menu, carousel, or form.
+- Run the project build when a change affects routing, metadata, static generation, or shared components.
+
 
