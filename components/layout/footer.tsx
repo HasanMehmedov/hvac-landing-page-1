@@ -79,17 +79,17 @@ export function Footer() {
                 Need a custom fit?
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-brand-foreground/70">
-                Use our configurator to size the perfect system for your home in
-                under a minute.
+                Tell us about your home and get a clear, no-obligation quote
+                from a certified technician.
               </p>
               <Link
-                href="/#configurator"
+                href="/#quote"
                 className={cn(
                   buttonVariants({ size: 'lg' }),
                   'mt-4 w-full gap-2 bg-orange font-semibold text-primary-foreground transition-all hover:-translate-y-0.5 hover:bg-orange-light',
                 )}
               >
-                Configure System
+                Get a Free Quote
                 <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             </div>
