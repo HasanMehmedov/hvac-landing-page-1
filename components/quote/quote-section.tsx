@@ -1,30 +1,12 @@
 'use client'
 
 import { FormEvent, useState } from 'react'
-import { Check, ShieldCheck } from 'lucide-react'
+import { CheckCircle2, ShieldCheck } from 'lucide-react'
 import { Reveal } from '@/components/reveal'
 import { Button } from '@/components/ui/button'
 
-const SERVICE_OPTIONS = [
-  'Air Conditioning',
-  'Heating Systems',
-  'Heat Pumps',
-  'Ductless Mini-Splits',
-  'Ductwork',
-  'Commercial HVAC',
-  'Indoor Air Quality',
-  'Maintenance & Repairs',
-  'Not sure yet',
-]
-
-const TRUST_SIGNALS = [
-  'Fully licensed and insured',
-  'No pushy sales visits',
-  '4.9★ rating, 2,800+ homes serviced',
-]
-
-const inputClassName =
-  'mt-2 h-12 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-orange focus:ring-2 focus:ring-orange/20'
+const SERVICE_OPTIONS = ['Air Conditioning', 'Heating Systems', 'Heat Pumps', 'Ductless Mini-Splits', 'Ductwork', 'Commercial HVAC', 'Indoor Air Quality', 'Maintenance & Repairs', 'Not sure yet']
+const TRUST_SIGNALS = ['Fully licensed and insured', 'No pushy sales visits', '4.9★ rating, 2,800+ homes serviced']
 
 export function QuoteSection() {
   const [submitted, setSubmitted] = useState(false)
@@ -32,114 +14,65 @@ export function QuoteSection() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    setError('')
     const form = event.currentTarget
     const data = new FormData(form)
-    const email = String(data.get('email') ?? '').trim()
-    const phone = String(data.get('phone') ?? '').trim()
-
+    const email = String(data.get('email') ?? '')
+    const phoneDigits = String(data.get('phone') ?? '').replace(/\D/g, '')
     if (!form.checkValidity()) {
+      setError('Please complete all required fields.')
       form.reportValidity()
       return
     }
-
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setError('Please enter a valid email address.')
       return
     }
-
-    if (!/^[+\d][\d\s().-]{7,}$/.test(phone)) {
+    if (phoneDigits.length < 10) {
       setError('Please enter a valid phone number.')
       return
     }
-
-    setError('')
-    // TODO: wire this up to actual form submission endpoint/CRM.
     setSubmitted(true)
   }
 
   return (
-    <section id="quote" className="bg-secondary py-16 lg:py-24">
+    <section id="quote" className="bg-background py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Reveal className="mx-auto max-w-3xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wide text-orange">
-            Get started
-          </span>
-          <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Get your free, no-obligation quote
-          </h2>
-          <p className="mt-4 text-pretty text-lg leading-relaxed text-muted-foreground">
-            Tell us a bit about your home and a certified technician will follow up with an accurate, all-inclusive price — no guesswork, no pushy sales visits.
-          </p>
+          <span className="text-sm font-semibold uppercase tracking-wide text-orange">Get started</span>
+          <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Get your free, no-obligation quote</h2>
+          <p className="mt-4 text-pretty text-lg leading-relaxed text-muted-foreground">Tell us a bit about your home and a certified technician will follow up with an accurate, all-inclusive price — no guesswork, no pushy sales visits.</p>
         </Reveal>
-
-        <Reveal className="mx-auto mt-12 max-w-3xl" direction="up">
+        <Reveal className="mx-auto mt-12 max-w-3xl">
           <div className="rounded-2xl border border-border bg-card p-6 shadow-sm sm:p-8">
             {submitted ? (
               <div className="flex min-h-80 flex-col items-center justify-center text-center">
-                <span className="flex size-14 items-center justify-center rounded-full bg-success/15 text-success">
-                  <Check className="size-7" aria-hidden="true" />
-                </span>
-                <h3 className="mt-5 text-2xl font-bold text-foreground">Thanks!</h3>
-                <p className="mt-2 max-w-md text-muted-foreground">
-                  A certified technician will reach out within 24 hours.
-                </p>
+                <CheckCircle2 className="size-12 text-success" aria-hidden="true" />
+                <h3 className="mt-5 text-2xl font-bold text-foreground">Thanks for reaching out.</h3>
+                <p className="mt-3 max-w-md leading-relaxed text-muted-foreground">A certified technician will reach out within 24 hours with the next steps for your free quote.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} noValidate className="space-y-5">
+              <form onSubmit={handleSubmit} noValidate>
                 <div className="grid gap-5 sm:grid-cols-2">
-                  <label className="text-sm font-semibold text-foreground">
-                    Full name
-                    <input className={inputClassName} name="name" required autoComplete="name" />
-                  </label>
-                  <label className="text-sm font-semibold text-foreground">
-                    Phone number
-                    <input className={inputClassName} name="phone" type="tel" required autoComplete="tel" inputMode="tel" />
-                  </label>
-                  <label className="text-sm font-semibold text-foreground">
-                    Email
-                    <input className={inputClassName} name="email" type="email" required autoComplete="email" />
-                  </label>
-                  <label className="text-sm font-semibold text-foreground">
-                    Property address or ZIP code
-                    <input className={inputClassName} name="address" required autoComplete="street-address" />
-                  </label>
+                  <Field label="Full name" name="name" type="text" required />
+                  <Field label="Phone number" name="phone" type="tel" required inputMode="tel" />
+                  <Field label="Email" name="email" type="email" required inputMode="email" />
+                  <Field label="Property address or ZIP code" name="address" type="text" required />
+                  <label className="grid gap-2 text-sm font-semibold text-foreground sm:col-span-2">Service needed<select name="service" required className="h-11 rounded-lg border border-border bg-background px-3 font-normal outline-none focus:border-orange focus:ring-2 focus:ring-orange/20"><option value="">Select a service</option>{SERVICE_OPTIONS.map((service) => <option key={service}>{service}</option>)}</select></label>
+                  <label className="grid gap-2 text-sm font-semibold text-foreground sm:col-span-2">Notes <span className="font-normal text-muted-foreground">(optional)</span><textarea name="notes" rows={4} className="resize-y rounded-lg border border-border bg-background px-3 py-2 font-normal outline-none focus:border-orange focus:ring-2 focus:ring-orange/20" /></label>
                 </div>
-
-                <label className="block text-sm font-semibold text-foreground">
-                  Service needed
-                  <select className={inputClassName} name="service" required defaultValue="">
-                    <option value="" disabled>Select a service</option>
-                    {SERVICE_OPTIONS.map((service) => <option key={service}>{service}</option>)}
-                  </select>
-                </label>
-
-                <label className="block text-sm font-semibold text-foreground">
-                  Notes <span className="font-normal text-muted-foreground">(optional)</span>
-                  <textarea className="mt-2 min-h-28 w-full resize-y rounded-lg border border-border bg-background px-3 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-orange focus:ring-2 focus:ring-orange/20" name="notes" />
-                </label>
-
-                {error && <p className="text-sm font-medium text-destructive" role="alert">{error}</p>}
-
-                <Button type="submit" size="lg" className="w-full bg-orange font-semibold text-primary-foreground hover:bg-orange-light sm:w-auto">
-                  Request my free quote
-                </Button>
-
-                <ul className="flex flex-col gap-2 border-t border-border pt-5 text-sm text-muted-foreground sm:flex-row sm:flex-wrap sm:gap-x-6">
-                  {TRUST_SIGNALS.map((signal) => (
-                    <li key={signal} className="flex items-center gap-2">
-                      <ShieldCheck className="size-4 shrink-0 text-success" aria-hidden="true" />
-                      {signal}
-                    </li>
-                  ))}
-                </ul>
+                {error && <p role="alert" className="mt-5 text-sm font-medium text-destructive">{error}</p>}
+                <Button type="submit" size="lg" className="mt-6 w-full bg-orange font-semibold text-primary-foreground hover:bg-orange-light sm:w-auto">Request my free quote</Button>
               </form>
             )}
           </div>
         </Reveal>
+        <div className="mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-muted-foreground">{TRUST_SIGNALS.map((signal) => <span key={signal} className="inline-flex items-center gap-2"><ShieldCheck className="size-4 text-success" aria-hidden="true" />{signal}</span>)}</div>
       </div>
     </section>
   )
 }
 
-type QuoteSectionProps = never
-void (undefined as unknown as QuoteSectionProps)
+function Field({ label, name, type, required, inputMode }: { label: string; name: string; type: string; required?: boolean; inputMode?: 'email' | 'tel' }) {
+  return <label className="grid gap-2 text-sm font-semibold text-foreground">{label}<input name={name} type={type} required={required} inputMode={inputMode} className="h-11 rounded-lg border border-border bg-background px-3 font-normal outline-none focus:border-orange focus:ring-2 focus:ring-orange/20" /></label>
+}
