@@ -918,21 +918,10 @@ This is the active plan for future work. Earlier detailed checklists are histori
 - Mobile horizontal overflow fix, verified across the primary mobile viewport and larger breakpoints.
 - Shop Systems repeat-navigation behavior fixed.
 
-### Planned work: replace configurator and fixed pricing with quote capture
-- **Goal:** Remove the homepage System Configurator and fixed-price tier sections completely. Replace them with one client-side "Get your free, no-obligation quote" lead-capture section using the existing design system.
-- **Affected files/routes:** Homepage composition (`app/page.tsx`), configurator/pricing section usage and components, new quote form component, FAQ copy, footer CTA and footer pricing links, related constants/imports, and any stale `#configurator`/`#pricing` references.
-- **Implementation:**
-  - Remove the configurator slider, climate selector, system selector, recommendation/price-calculation logic, checkout action, pricing cards, fixed dollar amounts, and "Use the system configurator" link from the homepage.
-  - Add a quote form with required full name, phone, email, address/ZIP, and service-needed fields; optional notes; orange primary submit CTA; client-side required/email/phone validation; and an in-place success state confirming technician follow-up within 24 hours.
-  - Leave a clear TODO at the submission boundary for wiring a real endpoint or CRM later; do not add backend persistence in this phase.
-  - Add the requested GET STARTED eyebrow, quote headline/subheading, and 2–3 existing trust signals: licensing/insurance, no pushy sales visits, and 4.9★ / 2,800+ homes serviced.
-  - Update FAQ copy to describe technician assessment by call or on-site visit, update the footer custom-fit card to "Get a Free Quote" pointing to the new quote form section, and repoint/rename the footer Pricing link to the quote flow.
-  - Fully remove stale configurator/pricing imports, constants, IDs, anchors, and internal references rather than hiding the old UI.
-- **Acceptance criteria:** No configurator controls or fixed-price tier cards remain anywhere on the site; no stale configurator/pricing links remain; the quote form is accessible and responsive; invalid submissions show validation feedback; valid submission replaces the form with the success confirmation; trust signals are visible; and the footer/FAQ wording reflects quote-based assessment.
-- **Verification:** Test the homepage at 300px, 375px, 768px, and 1440px; confirm no horizontal overflow; exercise invalid and valid form submission; verify footer and FAQ links/copy; search the codebase for stale configurator/pricing references; run the project build because shared homepage components and routes change.
-- **Status:** ✅ COMPLETED — Replaced the homepage configurator and fixed-price sections with `components/quote/quote-section.tsx`, removed the retired pricing/configurator/checkout components and their constants, updated FAQ/footer/navigation quote references, and removed stale `#pricing`/`#configurator` links from the application source. Verified the production build passes; browser checks passed at 300px, 375px, 768px, and 1440px with no horizontal overflow, invalid required-field submission was blocked, valid submission showed the 24-hour follow-up success state, and the quote section replaced the retired UI. `pnpm lint` remains unavailable because no eslint executable is installed in the project.
-
-- **Superseded requirements:** Do not reintroduce fixed package pricing, instant sizing/price calculations, the configurator slider/selectors, or the old pricing comparison CTA.
+### Open work
+- No implementation tasks are currently open in this document.
+- If new work is added, record it as a focused section below with: goal, affected files/routes, acceptance criteria, verification evidence, and status.
+- Keep this canonical plan synchronized with the actual implementation; do not re-add superseded requirements such as an eight-card homepage grid, marquee services, anchor-only navigation, or a navigation layout containing only the logo and CTA.
 
 ### Verification standard for future changes
 - Test the primary mobile viewport at 300px wide first, then 375px, 768px, and 1440px.

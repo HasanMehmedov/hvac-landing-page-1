@@ -13,7 +13,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://hvac-landing-page-1-one.vercel.app/'),
-  title: 'NextDay HVAC | Honest HVAC Service & Free Quotes',
+  title: 'NextDay HVAC | Upfront Pricing. Next-Day Installation.',
   description:
     'Shop high-efficiency air conditioners, heat pumps, and mini-splits with all-inclusive pricing and certified next-day installation. No surprise quotes, no pushy sales visits.',
   generator: 'Next.js',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     apple: '/icon.jpg',
   },
   openGraph: {
-    title: 'NextDay HVAC | Honest HVAC Service & Free Quotes',
+    title: 'NextDay HVAC | Upfront Pricing. Next-Day Installation.',
     description:
       'Shop high-efficiency air conditioners, heat pumps, and mini-splits with all-inclusive pricing and certified next-day installation. No surprise quotes, no pushy sales visits.',
     url: 'https://hvac-landing-page-1-one.vercel.app/',
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'NextDay HVAC | Honest HVAC Service & Free Quotes',
+    title: 'NextDay HVAC | Upfront Pricing. Next-Day Installation.',
     description:
       'Shop high-efficiency air conditioners, heat pumps, and mini-splits with all-inclusive pricing and certified next-day installation. No surprise quotes, no pushy sales visits.',
     images: ['/images/og-image.png'],

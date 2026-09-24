@@ -42,8 +42,8 @@ export function AboutMission() {
           </p>
           <p>
             Behind that simplicity is a network of certified local crews, honest
-            clear quotes, and certified technicians who recommend the right
-            system for your home. A technician confirms the details with you before work begins.
+            all-inclusive pricing, and a configurator that sizes the right
+            system for your home in under a minute. A supervisor confirms the
             details on a quick call before install day, and any adjustments are
             always free.
           </p>

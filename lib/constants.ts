@@ -17,10 +17,11 @@ export interface NavLink {
 }
 
 export const NAV_LINKS: NavLink[] = [
-  { label: 'Services', href: '/services' },
-  { label: 'Reviews', href: '/reviews' },
+  { label: 'Systems', href: '#systems' },
+  { label: 'Pricing', href: '#pricing' },
+  { label: 'Configure', href: '#configurator' },
+  { label: 'Reviews', href: '#reviews' },
   { label: 'FAQ', href: '#faq' },
-  { label: 'Get a Quote', href: '#quote' },
 ]
 
 /* ------------------------------ Feature banner ----------------------------- */
@@ -56,6 +57,73 @@ export const FEATURES: Feature[] = [
     title: 'Free 1st-Year Service',
     description: 'Complimentary maintenance visit in year one.',
     icon: Wrench,
+  },
+]
+
+/* ------------------------------ Pricing tiers ------------------------------ */
+
+export interface PricingTier {
+  id: string
+  name: string
+  seer: string
+  description: string
+  price: number
+  monthlyPayment: number
+  badge: string | null
+  features: string[]
+  highlighted: boolean
+}
+
+export const PRICING_TIERS: PricingTier[] = [
+  {
+    id: 'standard',
+    name: 'Standard Efficiency',
+    seer: 'Saves ~15%',
+    description: 'Dependable cooling at the lowest upfront cost.',
+    price: 3500,
+    monthlyPayment: 79,
+    badge: null,
+    highlighted: false,
+    features: [
+      'Reliable, steady cooling',
+      'Professional install included',
+      'Permits & old-unit removal',
+      '10-year parts & labor warranty',
+    ],
+  },
+  {
+    id: 'high',
+    name: 'High-Efficiency Comfort',
+    seer: 'Saves ~30%',
+    description: 'Balanced energy savings with quiet operation.',
+    price: 4800,
+    monthlyPayment: 119,
+    badge: 'Best Value',
+    highlighted: true,
+    features: [
+      'Extra energy-saving cooling',
+      'Whisper-quiet operation',
+      'Permits & old-unit removal',
+      '10-year parts & labor warranty',
+      'Free 1st-year maintenance visit',
+    ],
+  },
+  {
+    id: 'ultimate',
+    name: 'Ultimate Smart System',
+    seer: 'Saves ~45%',
+    description: 'Smart, ultra-efficient comfort with app control.',
+    price: 6200,
+    monthlyPayment: 159,
+    badge: null,
+    highlighted: false,
+    features: [
+      'Smart, ultra-efficient cooling',
+      'Smart thermostat & app control',
+      'Permits & old-unit removal',
+      '10-year parts & labor warranty',
+      'Priority support & annual service',
+    ],
   },
 ]
 
@@ -160,15 +228,15 @@ export interface FaqItem {
 export const FAQ_ITEMS: FaqItem[] = [
   {
     id: 'sizing',
-    question: 'How do I know what system is right for my home?',
+    question: 'How do I know I am choosing the right size system for my home?',
     answer:
-      'A certified technician will review your home details with you by phone or during an on-site visit, then recommend the right system size and setup for your layout. We explain the options clearly before any work begins.',
+      'Our intelligent online configurator uses your square footage and local climate to recommend the right system size for your home. Once you order, a certified local installation supervisor reviews your home details on a quick 10-minute confirmation call to double-verify the system matches your layout before it leaves our warehouse. If an adjustment is needed, we update it free of charge.',
   },
   {
-    id: 'assessment',
-    question: 'What happens during the quote process?',
+    id: 'pricing',
+    question: 'Is the price I see really all-inclusive?',
     answer:
-      'We learn about your comfort needs, assess your home by phone or on-site visit, and provide a clear quote for the recommended work. You will know what is included before you decide.',
+      'Yes. The price on screen covers the equipment, certified installation labor, standard permits, and removal of your old unit. There are no surprise fees or pushy in-home sales visits. The only time pricing changes is for non-standard work (like major ductwork), which is always confirmed with you before any charge.',
   },
   {
     id: 'warranty',
@@ -184,6 +252,73 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
 ]
 
+/* ------------------------------ Configurator ------------------------------- */
+
+export interface ClimateZone {
+  id: string
+  label: string
+  multiplier: number
+}
+
+export const CLIMATE_ZONES: ClimateZone[] = [
+  { id: 'temperate', label: 'Temperate', multiplier: 1 },
+  { id: 'hot-humid', label: 'Hot & Humid', multiplier: 1.18 },
+  { id: 'desert', label: 'Hot & Dry', multiplier: 1.12 },
+  { id: 'cold', label: 'Cold', multiplier: 1.08 },
+]
+
+export interface ConfigSystemType {
+  id: string
+  label: string
+  base: number
+  description: string
+}
+
+export const CONFIG_SYSTEM_TYPES: ConfigSystemType[] = [
+  {
+    id: 'central',
+    label: 'Central Air',
+    base: 3500,
+    description: 'Ducted whole-home cooling & heating.',
+  },
+  {
+    id: 'mini-split',
+    label: 'Mini-Split',
+    base: 2900,
+    description: 'Ductless zones for targeted comfort.',
+  },
+  {
+    id: 'hybrid',
+    label: 'Hybrid Heat Pump',
+    base: 5200,
+    description: 'Max efficiency in every season.',
+  },
+]
+
+/**
+ * Maps the configurator inputs to one of the three real installation packages.
+ * This gives the configurator a concrete outcome: a recommended, bookable tier.
+ */
+export function recommendTier(
+  sqft: number,
+  climate: ClimateZone,
+  systemType: ConfigSystemType,
+): PricingTier {
+  let tierId: PricingTier['id']
+
+  if (systemType.id === 'hybrid' || climate.multiplier >= 1.15) {
+    // Top efficiency for premium systems or demanding humid climates.
+    tierId = 'ultimate'
+  } else if (sqft > 2400 || climate.multiplier > 1.05) {
+    // Larger homes or hotter/colder climates benefit from higher efficiency.
+    tierId = 'high'
+  } else {
+    tierId = 'standard'
+  }
+
+  return PRICING_TIERS.find((t) => t.id === tierId) ?? PRICING_TIERS[0]
+}
+
 /* ------------------------------- Footer nav -------------------------------- */
 
 export const FOOTER_LINKS = {
@@ -194,14 +329,14 @@ export const FOOTER_LINKS = {
     { label: 'All Services', href: '/services' },
   ],
   Company: [
-    { label: 'How It Works', href: '#quote' },
-    { label: 'Get a Quote', href: '#quote' },
+    { label: 'How It Works', href: '#configurator' },
+    { label: 'Pricing', href: '#pricing' },
     { label: 'Reviews', href: '/reviews' },
     { label: 'FAQ', href: '#faq' },
   ],
   Support: [
     { label: 'Warranty', href: '#faq' },
-    { label: 'Free Quote', href: '#quote' },
+    { label: 'Price Match', href: '#pricing' },
     { label: 'Financing', href: '#faq' },
     { label: 'Contact', href: '#' },
   ],

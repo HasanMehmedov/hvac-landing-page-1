@@ -57,7 +57,7 @@ export default function ReviewsPage() {
           </p>
           <div className="mt-7 flex justify-center">
             <Link
-              href="/#quote"
+              href="/#pricing"
               className={cn(
                 buttonVariants({ size: 'lg' }),
                 'gap-2 bg-orange px-7 font-semibold text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-orange-light hover:shadow-md',

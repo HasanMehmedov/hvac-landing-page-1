@@ -44,7 +44,7 @@ export function AboutHero() {
 
         <div className="mt-9 flex flex-col gap-3 justify-center sm:flex-row sm:items-center w-full">
           <Link
-            href="/#quote"
+            href="/#pricing"
             className={cn(
               buttonVariants({ size: 'lg' }),
               'gap-2 bg-orange px-7 font-semibold text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-orange-light hover:shadow-md',
@@ -54,7 +54,7 @@ export function AboutHero() {
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
           <Link
-            href="/#quote"
+            href="/#configurator"
             className={cn(
               buttonVariants({ variant: 'outline', size: 'lg' }),
               'border-brand/20 px-7 font-semibold text-foreground hover:bg-background',

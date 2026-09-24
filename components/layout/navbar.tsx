@@ -37,7 +37,7 @@ export function Navbar() {
   /**
    * "Shop Systems" always lands on the pricing section. On the home page we
    * scroll directly (so repeat clicks keep working even when the URL hash is
-   * already "#quote"); on other pages we navigate home first, then scroll.
+   * already "#pricing"); on other pages we navigate home first, then scroll.
    */
   const handleShopSystems = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -45,7 +45,7 @@ export function Navbar() {
     if (pathname === '/') {
       scrollToId('pricing')
     } else {
-      router.push('/#quote')
+      router.push('/#pricing')
     }
   }
 
@@ -94,7 +94,7 @@ export function Navbar() {
             </Link>
           ))}
           <Link
-            href="/#quote"
+            href="/#pricing"
             onClick={handleShopSystems}
             className={cn(
               buttonVariants({ size: 'lg' }),
@@ -145,7 +145,7 @@ export function Navbar() {
             </Link>
           ))}
           <Link
-            href="/#quote"
+            href="/#pricing"
             onClick={handleShopSystems}
             className={cn(
               buttonVariants({ size: 'lg' }),

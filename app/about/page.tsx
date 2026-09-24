@@ -71,7 +71,7 @@ export default function AboutPage() {
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
-              href="/#quote"
+              href="/#pricing"
               className={cn(
                 buttonVariants({ size: 'lg' }),
                 'gap-2 bg-orange px-7 font-semibold text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-orange-light hover:shadow-md',
@@ -81,7 +81,7 @@ export default function AboutPage() {
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
             <Link
-              href="/#quote"
+              href="/#configurator"
               className={cn(
                 buttonVariants({ variant: 'outline', size: 'lg' }),
                 'border-brand/20 px-7 font-semibold text-foreground hover:bg-background',

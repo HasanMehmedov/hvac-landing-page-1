@@ -62,7 +62,7 @@ export function HeroSection() {
                 <Button
                   size="lg"
                   variant="outline"
-                  onClick={() => scrollToId('quote')}
+                  onClick={() => scrollToId('configurator')}
                   className="border-brand/20 px-7 text-base font-semibold text-foreground hover:bg-background"
                 >
                   See how it works
