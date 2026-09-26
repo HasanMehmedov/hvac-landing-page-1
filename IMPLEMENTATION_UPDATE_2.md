@@ -918,10 +918,10 @@ This is the active plan for future work. Earlier detailed checklists are histori
 - Mobile horizontal overflow fix, verified across the primary mobile viewport and larger breakpoints.
 - Shop Systems repeat-navigation behavior fixed.
 
+- Replace System Configurator & Fixed Pricing Table with "Get a free quote" Lead-Capture Section: pricing section, configurator, and checkout modal removed; `QuoteSection` lead-capture form implemented with validation, success state, CRM TODO, and trust badges; FAQ, about mission copy, and footer links updated; verified in-browser.
+
 ### Open work
 - No implementation tasks are currently open in this document.
-- If new work is added, record it as a focused section below with: goal, affected files/routes, acceptance criteria, verification evidence, and status.
-- Keep this canonical plan synchronized with the actual implementation; do not re-add superseded requirements such as an eight-card homepage grid, marquee services, anchor-only navigation, or a navigation layout containing only the logo and CTA.
 
 ### Verification standard for future changes
 - Test the primary mobile viewport at 300px wide first, then 375px, 768px, and 1440px.

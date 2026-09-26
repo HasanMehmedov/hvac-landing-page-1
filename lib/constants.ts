@@ -18,8 +18,7 @@ export interface NavLink {
 
 export const NAV_LINKS: NavLink[] = [
   { label: 'Systems', href: '#systems' },
-  { label: 'Pricing', href: '#pricing' },
-  { label: 'Configure', href: '#configurator' },
+  { label: 'Get a Quote', href: '#quote' },
   { label: 'Reviews', href: '#reviews' },
   { label: 'FAQ', href: '#faq' },
 ]
@@ -57,73 +56,6 @@ export const FEATURES: Feature[] = [
     title: 'Free 1st-Year Service',
     description: 'Complimentary maintenance visit in year one.',
     icon: Wrench,
-  },
-]
-
-/* ------------------------------ Pricing tiers ------------------------------ */
-
-export interface PricingTier {
-  id: string
-  name: string
-  seer: string
-  description: string
-  price: number
-  monthlyPayment: number
-  badge: string | null
-  features: string[]
-  highlighted: boolean
-}
-
-export const PRICING_TIERS: PricingTier[] = [
-  {
-    id: 'standard',
-    name: 'Standard Efficiency',
-    seer: 'Saves ~15%',
-    description: 'Dependable cooling at the lowest upfront cost.',
-    price: 3500,
-    monthlyPayment: 79,
-    badge: null,
-    highlighted: false,
-    features: [
-      'Reliable, steady cooling',
-      'Professional install included',
-      'Permits & old-unit removal',
-      '10-year parts & labor warranty',
-    ],
-  },
-  {
-    id: 'high',
-    name: 'High-Efficiency Comfort',
-    seer: 'Saves ~30%',
-    description: 'Balanced energy savings with quiet operation.',
-    price: 4800,
-    monthlyPayment: 119,
-    badge: 'Best Value',
-    highlighted: true,
-    features: [
-      'Extra energy-saving cooling',
-      'Whisper-quiet operation',
-      'Permits & old-unit removal',
-      '10-year parts & labor warranty',
-      'Free 1st-year maintenance visit',
-    ],
-  },
-  {
-    id: 'ultimate',
-    name: 'Ultimate Smart System',
-    seer: 'Saves ~45%',
-    description: 'Smart, ultra-efficient comfort with app control.',
-    price: 6200,
-    monthlyPayment: 159,
-    badge: null,
-    highlighted: false,
-    features: [
-      'Smart, ultra-efficient cooling',
-      'Smart thermostat & app control',
-      'Permits & old-unit removal',
-      '10-year parts & labor warranty',
-      'Priority support & annual service',
-    ],
   },
 ]
 
@@ -178,8 +110,8 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: 3,
     rating: 5,
-    headline: 'The configurator nailed our system size.',
-    body: 'I was nervous about sizing, but the online tool matched what the install supervisor confirmed on the call. The whole booking took ten minutes and saved us over $1,500 compared to two other quotes.',
+    headline: 'The free quote process was fast and accurate.',
+    body: 'I was nervous about sizing, but the quote process matched what the install supervisor confirmed on the call. The whole request took two minutes and saved us over $1,500 compared to two other quotes.',
     author: 'James & Priya T.',
     location: 'Denver, CO',
     badge: 'Verified Customer',
@@ -230,13 +162,13 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: 'sizing',
     question: 'How do I know I am choosing the right size system for my home?',
     answer:
-      'Our intelligent online configurator uses your square footage and local climate to recommend the right system size for your home. Once you order, a certified local installation supervisor reviews your home details on a quick 10-minute confirmation call to double-verify the system matches your layout before it leaves our warehouse. If an adjustment is needed, we update it free of charge.',
+      'When you request a free quote, our team evaluates your home details, square footage, and local climate to recommend the optimal system size. A certified local installation supervisor double-verifies everything on a quick 10-minute confirmation call before installation to ensure a perfect fit.',
   },
   {
     id: 'pricing',
-    question: 'Is the price I see really all-inclusive?',
+    question: 'Is my quote really all-inclusive?',
     answer:
-      'Yes. The price on screen covers the equipment, certified installation labor, standard permits, and removal of your old unit. There are no surprise fees or pushy in-home sales visits. The only time pricing changes is for non-standard work (like major ductwork), which is always confirmed with you before any charge.',
+      'Yes. Your quote covers the equipment, certified installation labor, standard permits, and removal of your old unit. There are no surprise fees or pushy in-home sales visits. The only time pricing changes is for non-standard work (like major ductwork), which is always confirmed with you before any charge.',
   },
   {
     id: 'warranty',
@@ -248,76 +180,9 @@ export const FAQ_ITEMS: FaqItem[] = [
     id: 'financing',
     question: 'How does financing and pre-qualification work?',
     answer:
-      'You can split your system into low monthly payments starting at $65/mo. Pre-qualification takes under a minute during checkout and does not affect your credit score. You will see your estimated monthly payment instantly and can choose to pay in full or finance at any time.',
+      'You can split your system into low monthly payments starting at $65/mo. Pre-qualification takes under a minute during your follow-up consultation and does not affect your credit score. You will see your estimated monthly payment instantly and can choose to pay in full or finance at any time.',
   },
 ]
-
-/* ------------------------------ Configurator ------------------------------- */
-
-export interface ClimateZone {
-  id: string
-  label: string
-  multiplier: number
-}
-
-export const CLIMATE_ZONES: ClimateZone[] = [
-  { id: 'temperate', label: 'Temperate', multiplier: 1 },
-  { id: 'hot-humid', label: 'Hot & Humid', multiplier: 1.18 },
-  { id: 'desert', label: 'Hot & Dry', multiplier: 1.12 },
-  { id: 'cold', label: 'Cold', multiplier: 1.08 },
-]
-
-export interface ConfigSystemType {
-  id: string
-  label: string
-  base: number
-  description: string
-}
-
-export const CONFIG_SYSTEM_TYPES: ConfigSystemType[] = [
-  {
-    id: 'central',
-    label: 'Central Air',
-    base: 3500,
-    description: 'Ducted whole-home cooling & heating.',
-  },
-  {
-    id: 'mini-split',
-    label: 'Mini-Split',
-    base: 2900,
-    description: 'Ductless zones for targeted comfort.',
-  },
-  {
-    id: 'hybrid',
-    label: 'Hybrid Heat Pump',
-    base: 5200,
-    description: 'Max efficiency in every season.',
-  },
-]
-
-/**
- * Maps the configurator inputs to one of the three real installation packages.
- * This gives the configurator a concrete outcome: a recommended, bookable tier.
- */
-export function recommendTier(
-  sqft: number,
-  climate: ClimateZone,
-  systemType: ConfigSystemType,
-): PricingTier {
-  let tierId: PricingTier['id']
-
-  if (systemType.id === 'hybrid' || climate.multiplier >= 1.15) {
-    // Top efficiency for premium systems or demanding humid climates.
-    tierId = 'ultimate'
-  } else if (sqft > 2400 || climate.multiplier > 1.05) {
-    // Larger homes or hotter/colder climates benefit from higher efficiency.
-    tierId = 'high'
-  } else {
-    tierId = 'standard'
-  }
-
-  return PRICING_TIERS.find((t) => t.id === tierId) ?? PRICING_TIERS[0]
-}
 
 /* ------------------------------- Footer nav -------------------------------- */
 
@@ -329,14 +194,13 @@ export const FOOTER_LINKS = {
     { label: 'All Services', href: '/services' },
   ],
   Company: [
-    { label: 'How It Works', href: '#configurator' },
-    { label: 'Pricing', href: '#pricing' },
+    { label: 'Get a Quote', href: '#quote' },
     { label: 'Reviews', href: '/reviews' },
     { label: 'FAQ', href: '#faq' },
   ],
   Support: [
     { label: 'Warranty', href: '#faq' },
-    { label: 'Price Match', href: '#pricing' },
+    { label: 'Get a Quote', href: '#quote' },
     { label: 'Financing', href: '#faq' },
     { label: 'Contact', href: '#' },
   ],

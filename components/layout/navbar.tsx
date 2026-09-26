@@ -35,17 +35,17 @@ export function Navbar() {
   }, [pathname])
 
   /**
-   * "Shop Systems" always lands on the pricing section. On the home page we
+   * "Get a Quote" lands on the quote section. On the home page we
    * scroll directly (so repeat clicks keep working even when the URL hash is
-   * already "#pricing"); on other pages we navigate home first, then scroll.
+   * already "#quote"); on other pages we navigate home first, then scroll.
    */
-  const handleShopSystems = (e: React.MouseEvent) => {
+  const handleGetQuote = (e: React.MouseEvent) => {
     e.preventDefault()
     setMenuOpen(false)
     if (pathname === '/') {
-      scrollToId('pricing')
+      scrollToId('quote')
     } else {
-      router.push('/#pricing')
+      router.push('/#quote')
     }
   }
 
@@ -94,14 +94,14 @@ export function Navbar() {
             </Link>
           ))}
           <Link
-            href="/#pricing"
-            onClick={handleShopSystems}
+            href="/#quote"
+            onClick={handleGetQuote}
             className={cn(
               buttonVariants({ size: 'lg' }),
               'bg-orange px-5 font-semibold text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-orange-light hover:shadow-md active:translate-y-0',
             )}
           >
-            Shop Systems
+            Get a Quote
           </Link>
         </nav>
 
@@ -145,14 +145,14 @@ export function Navbar() {
             </Link>
           ))}
           <Link
-            href="/#pricing"
-            onClick={handleShopSystems}
+            href="/#quote"
+            onClick={handleGetQuote}
             className={cn(
               buttonVariants({ size: 'lg' }),
               'mt-2 bg-orange font-semibold text-primary-foreground shadow-sm transition-all hover:bg-orange-light',
             )}
           >
-            Shop Systems
+            Get a Quote
           </Link>
         </nav>
       </div>

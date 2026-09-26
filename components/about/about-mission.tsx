@@ -42,7 +42,7 @@ export function AboutMission() {
           </p>
           <p>
             Behind that simplicity is a network of certified local crews, honest
-            all-inclusive pricing, and a configurator that sizes the right
+            all-inclusive pricing, and a fast quote process that sizes the right
             system for your home in under a minute. A supervisor confirms the
             details on a quick call before install day, and any adjustments are
             always free.

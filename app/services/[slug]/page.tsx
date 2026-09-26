@@ -63,23 +63,23 @@ export default async function ServicePage({ params }: ServicePageProps) {
               </p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/#pricing"
+                  href="/#quote"
                   className={cn(
                     buttonVariants({ size: 'lg' }),
                     'gap-2 bg-orange px-7 font-semibold text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-orange-light hover:shadow-md',
                   )}
                 >
-                  Book your installation
+                  Get a free quote
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
                 <Link
-                  href="/#configurator"
+                  href="/services"
                   className={cn(
                     buttonVariants({ size: 'lg', variant: 'outline' }),
                     'border-brand/20 px-7 font-semibold text-foreground hover:bg-background',
                   )}
                 >
-                  Size my system
+                  All services
                 </Link>
               </div>
             </div>

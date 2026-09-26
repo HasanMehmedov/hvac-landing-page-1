@@ -54,18 +54,18 @@ export function HeroSection() {
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <Button
                   size="lg"
-                  onClick={() => scrollToId('pricing')}
+                  onClick={() => scrollToId('quote')}
                   className="gap-2 bg-orange px-7 text-base font-semibold text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-orange-light hover:shadow-md"
                 >
-                  Book your installation <ArrowRight className="size-4" />
+                  Get a free quote <ArrowRight className="size-4" />
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  onClick={() => scrollToId('configurator')}
+                  onClick={() => scrollToId('services')}
                   className="border-brand/20 px-7 text-base font-semibold text-foreground hover:bg-background"
                 >
-                  See how it works
+                  Our services
                 </Button>
               </div>
             </Reveal>
